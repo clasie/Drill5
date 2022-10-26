@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net5.0-windows7.0": {
+    "net5.0": {
       "Microsoft.NETCore.Platforms/3.1.0": {
         "type": "package",
         "compile": {
@@ -129,19 +129,6 @@
             "assetType": "runtime",
             "rid": "win"
           }
-        }
-      },
-      "DBase/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
-        "dependencies": {
-          "System.Data.SqlClient": "4.8.4"
-        },
-        "compile": {
-          "bin/placeholder/DBase.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/DBase.dll": {}
         }
       }
     }
@@ -456,16 +443,10 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
-    },
-    "DBase/1.0.0": {
-      "type": "project",
-      "path": "../DB/DBase.csproj",
-      "msbuildProject": "../DB/DBase.csproj"
     }
   },
   "projectFileDependencyGroups": {
-    "net5.0-windows7.0": [
-      "DBase >= 1.0.0",
+    "net5.0": [
       "System.Data.SqlClient >= 4.8.4"
     ]
   },
@@ -476,11 +457,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\csi\\source\\repos\\Drill5\\CoreWinFormsApp4\\CoreWinFormsApp4.csproj",
-      "projectName": "CoreWinFormsApp4",
-      "projectPath": "C:\\Users\\csi\\source\\repos\\Drill5\\CoreWinFormsApp4\\CoreWinFormsApp4.csproj",
+      "projectUniqueName": "C:\\Users\\csi\\source\\repos\\Drill5\\DB\\DBase.csproj",
+      "projectName": "DBase",
+      "projectPath": "C:\\Users\\csi\\source\\repos\\Drill5\\DB\\DBase.csproj",
       "packagesPath": "C:\\Users\\csi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\csi\\source\\repos\\Drill5\\CoreWinFormsApp4\\obj\\",
+      "outputPath": "C:\\Users\\csi\\source\\repos\\Drill5\\DB\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -490,20 +471,16 @@
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net5.0-windows7.0"
+        "net5.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net5.0-windows7.0": {
-          "targetAlias": "net5.0-windows",
-          "projectReferences": {
-            "C:\\Users\\csi\\source\\repos\\Drill5\\DB\\DBase.csproj": {
-              "projectPath": "C:\\Users\\csi\\source\\repos\\Drill5\\DB\\DBase.csproj"
-            }
-          }
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -513,8 +490,8 @@
       }
     },
     "frameworks": {
-      "net5.0-windows7.0": {
-        "targetAlias": "net5.0-windows",
+      "net5.0": {
+        "targetAlias": "net5.0",
         "dependencies": {
           "System.Data.SqlClient": {
             "target": "Package",
@@ -534,9 +511,6 @@
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
-          },
-          "Microsoft.WindowsDesktop.App.WindowsForms": {
-            "privateAssets": "none"
           }
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"

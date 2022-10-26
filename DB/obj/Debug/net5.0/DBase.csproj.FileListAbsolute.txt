@@ -1,0 +1,11 @@
+C:\Users\csi\source\repos\Drill5\DB\bin\Debug\net5.0\DBase.deps.json
+C:\Users\csi\source\repos\Drill5\DB\bin\Debug\net5.0\DBase.dll
+C:\Users\csi\source\repos\Drill5\DB\bin\Debug\net5.0\ref\DBase.dll
+C:\Users\csi\source\repos\Drill5\DB\bin\Debug\net5.0\DBase.pdb
+C:\Users\csi\source\repos\Drill5\DB\obj\Debug\net5.0\DBase.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\csi\source\repos\Drill5\DB\obj\Debug\net5.0\DBase.AssemblyInfoInputs.cache
+C:\Users\csi\source\repos\Drill5\DB\obj\Debug\net5.0\DBase.AssemblyInfo.cs
+C:\Users\csi\source\repos\Drill5\DB\obj\Debug\net5.0\DBase.csproj.CoreCompileInputs.cache
+C:\Users\csi\source\repos\Drill5\DB\obj\Debug\net5.0\DBase.dll
+C:\Users\csi\source\repos\Drill5\DB\obj\Debug\net5.0\ref\DBase.dll
+C:\Users\csi\source\repos\Drill5\DB\obj\Debug\net5.0\DBase.pdb

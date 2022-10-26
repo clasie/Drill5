@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "oG9+RPjFcOfUwx9Ab/d4ZeloKmFIu0cczyqTMrAJUXDATbZcR8pP19aSA1rLcvPx38p7be/6TMuV5v+PsqIU5A==",
+  "dgSpecHash": "3X1nF4CqYyOIsm4GxYs4LuhA5MfBS8t9qUlkse57t3rQ9qHMeLmREvc3nZFiBmg6VXMQte/cHYYNLJwUDhc6IQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\csi\\source\\repos\\Drill5\\CoreWinFormsApp4\\CoreWinFormsApp4.csproj",
+  "projectFilePath": "C:\\Users\\csi\\source\\repos\\Drill5\\DB\\DBase.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\csi\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\csi\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",

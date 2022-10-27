@@ -32,14 +32,22 @@ namespace CoreWinFormsApp4
             ConnectionString = ConfigurationManager.AppSettings["connectionString"];
             DBase.DataBase.ConnectionString = ConnectionString;
         }
-
+        private void DisplayErrorMessageIfAny(string err) {
+            if (err != "")
+            {
+                MessageBox.Show(err);
+            }
+            else {
+                MessageBox.Show("Operation completed");
+            }
+        }
         private void btn_testConnection_Click(object sender, EventArgs e)
         {
             string err = string.Empty;
             try
             {
                 DBase.DataBase.TestConnection(ref err);
-                MessageBox.Show("Ok");
+                DisplayErrorMessageIfAny(err);
             }
             catch (Exception ex) 
             {
@@ -51,9 +59,13 @@ namespace CoreWinFormsApp4
             string err = string.Empty;
             try
             {
-                var data =DBase.DataBase.GetData(ref err);
-                MessageBox.Show(data);
-                MessageBox.Show("Ok");
+                var dataList = DBase.DataBase.GetDataList(ref err);
+                StringBuilder sb = new StringBuilder();
+                foreach (var item in dataList) {
+                    sb.Append(item.ToString()).AppendLine();
+                }
+                MessageBox.Show(sb.ToString());
+                DisplayErrorMessageIfAny(err);
             }
             catch (Exception ex)
             {
@@ -66,7 +78,7 @@ namespace CoreWinFormsApp4
             try
             {
                 DBase.DataBase.InsertData(ref err);
-                MessageBox.Show("Ok");
+                DisplayErrorMessageIfAny(err);
             }
             catch (Exception ex)
             {
@@ -79,7 +91,7 @@ namespace CoreWinFormsApp4
             try
             {
                 DBase.DataBase.UpdateData(ref err);
-                MessageBox.Show("Ok");
+                DisplayErrorMessageIfAny(err);
             }
             catch (Exception ex)
             {
@@ -92,7 +104,7 @@ namespace CoreWinFormsApp4
             try
             {
                 DBase.DataBase.Delete(ref err);
-                MessageBox.Show("Ok");
+                DisplayErrorMessageIfAny(err);
             }
             catch (Exception ex)
             {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DBase.Model;
+using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -11,7 +13,6 @@ namespace DBase
             get => _connectionString;
             set => _connectionString = value;
         }
-
         public static SqlConnection GetConnection()
         {
             return new SqlConnection(ConnectionString);
@@ -36,34 +37,29 @@ namespace DBase
                 }
             }
         }
-        public static string GetData(ref string err)
+        public static List<AvionAF> GetDataList(ref string err)
         {
             StringBuilder sb = new StringBuilder();
+            List<AvionAF> avionAFs = new List<AvionAF>();
             using (SqlConnection connection = DBase.DataBase.GetConnection())
             {
                 connection.Open();
 
                 SqlCommand command = connection.CreateCommand();
                 SqlTransaction transaction;
-
-                // Start a local transaction.
                 transaction = connection.BeginTransaction("SampleTransaction");
-
-                // Must assign both transaction object and connection 
-                // to Command object for a pending local transaction
                 command.Connection = connection;
                 command.Transaction = transaction;
 
-                string
-                     req = "SELECT * FROM aviondeaf";
+                string req = "SELECT * FROM aviondeaf";
 
                 try
                 {
                     command.CommandText = req;
                     SqlDataReader sqlDataReader = command.ExecuteReader();
                     while (sqlDataReader.Read())
-                    {
-                        sb.Append($"{sqlDataReader.GetValue(0)} - {sqlDataReader.GetValue(1)}").AppendLine();
+                    {                        
+                        avionAFs.Add(GetAvnionAF(sqlDataReader));
                     }
                     transaction.Commit();
                 }
@@ -80,10 +76,21 @@ namespace DBase
                         err += ex2.ToString();
                     }
                 }
-                return sb.ToString();
+                return avionAFs;
             }
         }
-       
+        private static AvionAF GetAvnionAF(SqlDataReader sqlDataReader) {
+            var avionAF = new AvionAF();
+
+            avionAF.Immat = sqlDataReader.GetValue(0).ToString();
+            avionAF.TypeAvion = sqlDataReader.GetValue(1).ToString();
+            if (sqlDataReader.GetValue(2) != DBNull.Value)
+            {
+                avionAF.NbHVol = (int)sqlDataReader.GetValue(2);
+            }
+
+            return avionAF;
+        }
         public static void InsertData(ref string err)
         {
             using (SqlConnection connection = DBase.DataBase.GetConnection())

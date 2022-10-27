@@ -44,32 +44,6 @@ namespace DBase
                 connection.Open();
 
                 SqlCommand command = connection.CreateCommand();
-                command.Connection = connection;
-                string req = "SELECT * FROM aviondeaf";
-                try
-                {
-                    command.CommandText = req;
-                    SqlDataReader sqlDataReader = command.ExecuteReader();
-                    while (sqlDataReader.Read())
-                    {
-                        sb.Append($"{sqlDataReader.GetValue(0)} - {sqlDataReader.GetValue(1)}").AppendLine();
-                    }
-                    return sb.ToString();
-                }
-                catch (Exception ex)
-                {
-                    err = ex.ToString();
-                    return sb.ToString();
-                }
-            }
-        }
-        public static void InsertData(ref string err)
-        {
-            using (SqlConnection connection = DBase.DataBase.GetConnection())
-            {
-                connection.Open();
-
-                SqlCommand command = connection.CreateCommand();
                 SqlTransaction transaction;
 
                 // Start a local transaction.
@@ -81,23 +55,21 @@ namespace DBase
                 command.Transaction = transaction;
 
                 string
-                     req = $"INSERT INTO aviondeaf (immat,typeAvion, nbHVol)";
-                     req += $"VALUES('CSI-3','csi3-avion',15)";
+                     req = "SELECT * FROM aviondeaf";
 
                 try
                 {
                     command.CommandText = req;
-                    command.ExecuteNonQuery();
-
-                    // Attempt to commit the transaction.
+                    SqlDataReader sqlDataReader = command.ExecuteReader();
+                    while (sqlDataReader.Read())
+                    {
+                        sb.Append($"{sqlDataReader.GetValue(0)} - {sqlDataReader.GetValue(1)}").AppendLine();
+                    }
                     transaction.Commit();
-                    Console.WriteLine("Both records are written to database.");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Commit Exception Type: {0}", ex.GetType());
-                    Console.WriteLine("  Message: {0}", ex.Message);
-
+                    err += ex.ToString();
                     // Attempt to roll back the transaction. 
                     try
                     {
@@ -105,11 +77,41 @@ namespace DBase
                     }
                     catch (Exception ex2)
                     {
-                        // This catch block will handle any errors that may have occurred 
-                        // on the server that would cause the rollback to fail, such as 
-                        // a closed connection.
-                        Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
-                        Console.WriteLine("  Message: {0}", ex2.Message);
+                        err += ex2.ToString();
+                    }
+                }
+                return sb.ToString();
+            }
+        }
+       
+        public static void InsertData(ref string err)
+        {
+            using (SqlConnection connection = DBase.DataBase.GetConnection())
+            {
+                connection.Open();
+
+                string
+                   req = $"INSERT INTO aviondeaf (immat,typeAvion, nbHVol)";
+                   req += $"VALUES('CSI-3','csi3-avion',15)";
+
+                SqlCommand command = PrepareCommand(connection, req);
+
+                try
+                {
+                    command.CommandText = req;
+                    command.ExecuteNonQuery();
+                    command.Transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    err = $"Commit Exception {ex.ToString()}";
+                    try
+                    {
+                        command.Transaction.Rollback();
+                    }
+                    catch (Exception ex2)
+                    {
+                        err = $"Rollback Exception {ex2.ToString()}";
                     }
                 }
             }
@@ -120,48 +122,29 @@ namespace DBase
             {
                 connection.Open();
 
-                SqlCommand command = connection.CreateCommand();
-                SqlTransaction transaction;
-
-                // Start a local transaction.
-                transaction = connection.BeginTransaction("SampleTransaction");
-
-                // Must assign both transaction object and connection 
-                // to Command object for a pending local transaction
-                command.Connection = connection;
-                command.Transaction = transaction;
-
                 var req = "UPDATE aviondeaf SET immat = 'CSI-Update1', typeAvion = 'typeAvion-Update' ";
                 req += " WHERE nbHVol = 15";
+
+                SqlCommand command = PrepareCommand(connection, req);
 
                 try
                 {
                     command.CommandText = req;
                     command.ExecuteNonQuery();
-
-                    // Attempt to commit the transaction.
-                    transaction.Commit();
-                    Console.WriteLine("Both records are written to database.");
+                    command.Transaction.Commit();
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Commit Exception Type: {0}", ex.GetType());
-                    Console.WriteLine("  Message: {0}", ex.Message);
-
-                    // Attempt to roll back the transaction. 
+                    err = $"Commit Exception {ex.ToString()}";
                     try
                     {
-                        transaction.Rollback();
+                        command.Transaction.Rollback();
                     }
                     catch (Exception ex2)
                     {
-                        // This catch block will handle any errors that may have occurred 
-                        // on the server that would cause the rollback to fail, such as 
-                        // a closed connection.
-                        Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
-                        Console.WriteLine("  Message: {0}", ex2.Message);
+                        err = $"Rollback Exception {ex2.ToString()}";
                     }
-                }
+                }                
             }
         }
         public static void Delete(ref string err)
@@ -170,49 +153,39 @@ namespace DBase
             {
                 connection.Open();
 
-                SqlCommand command = connection.CreateCommand();
-                SqlTransaction transaction;
-
-                // Start a local transaction.
-                transaction = connection.BeginTransaction("SampleTransaction");
-
-                // Must assign both transaction object and connection 
-                // to Command object for a pending local transaction
-                command.Connection = connection;
-                command.Transaction = transaction;
-
                 var req = "DELETE FROM aviondeaf WHERE immat LIKE '%CSI%' ";
+
+                SqlCommand command = PrepareCommand(connection, req);
+
                 try
                 {
-                    command.CommandText = req; 
-                    command.ExecuteNonQuery();
                     command.CommandText = req;
                     command.ExecuteNonQuery();
-
-                    // Attempt to commit the transaction.
-                    transaction.Commit();
-                    Console.WriteLine("Both records are written to database.");
+                    command.Transaction.Commit();
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Commit Exception Type: {0}", ex.GetType());
-                    Console.WriteLine("  Message: {0}", ex.Message);
-
-                    // Attempt to roll back the transaction. 
+                    err = $"Commit Exception {ex.ToString()}";
                     try
                     {
-                        transaction.Rollback();
+                        command.Transaction.Rollback();
                     }
                     catch (Exception ex2)
                     {
-                        // This catch block will handle any errors that may have occurred 
-                        // on the server that would cause the rollback to fail, such as 
-                        // a closed connection.
-                        Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
-                        Console.WriteLine("  Message: {0}", ex2.Message);
+                        err = $"Rollback Exception {ex2.ToString()}";
                     }
                 }
             }
+        }
+        private static SqlCommand PrepareCommand(SqlConnection connection, string request)
+        {
+            SqlCommand command = connection.CreateCommand();
+            SqlTransaction transaction;
+            // Start a local transaction.
+            transaction = connection.BeginTransaction("SampleTransaction");
+            command.Connection = connection;
+            command.Transaction = transaction;
+            return command;
         }
     }
 }

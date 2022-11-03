@@ -53,3 +53,4 @@ C:\Users\csi\source\repos\Drill5\CoreWinFormsApp4\obj\Debug\net5.0-windows\CoreW
 C:\Users\csi\source\repos\Drill5\CoreWinFormsApp4\obj\Debug\net5.0-windows\CoreWinFormsApp4.genruntimeconfig.cache
 C:\Users\csi\source\repos\Drill5\CoreWinFormsApp4\bin\Debug\net5.0-windows\DBase.dll
 C:\Users\csi\source\repos\Drill5\CoreWinFormsApp4\bin\Debug\net5.0-windows\DBase.pdb
+C:\Users\csi\source\repos\Drill5\CoreWinFormsApp4\bin\Debug\net5.0-windows\Autofac.dll

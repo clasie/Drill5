@@ -6,10 +6,11 @@ using System.Text;
 
 namespace DBase
 {
-    public class DataBase
+    public class DataBase : IDataBase
     {
         private string _connectionString = string.Empty;
-        public string ConnectionString {
+        public string ConnectionString
+        {
             get => _connectionString;
             set => _connectionString = value;
         }
@@ -62,7 +63,7 @@ namespace DBase
                     command.CommandText = req;
                     SqlDataReader sqlDataReader = command.ExecuteReader();
                     while (sqlDataReader.Read())
-                    {                        
+                    {
                         avionAFs.Add(GetAvnionAF(sqlDataReader));
                     }
                     transaction.Commit();
@@ -83,7 +84,8 @@ namespace DBase
                 return avionAFs;
             }
         }
-        private  AvionAF GetAvnionAF(SqlDataReader sqlDataReader) {
+        private AvionAF GetAvnionAF(SqlDataReader sqlDataReader)
+        {
             var avionAF = new AvionAF();
 
             avionAF.Immat = sqlDataReader.GetValue(0).ToString();
@@ -95,7 +97,7 @@ namespace DBase
 
             return avionAF;
         }
-        public  void InsertData(ref string err)
+        public void InsertData(ref string err)
         {
             using (SqlConnection connection = GetConnection())
             {
@@ -103,7 +105,7 @@ namespace DBase
 
                 string
                    req = $"INSERT INTO aviondeaf (immat,typeAvion, nbHVol)";
-                   req += $"VALUES('CSI-3','csi3-avion',15)";
+                req += $"VALUES('CSI-3','csi3-avion',15)";
 
                 SqlCommand command = PrepareCommand(connection, req);
 
@@ -127,7 +129,7 @@ namespace DBase
                 }
             }
         }
-        public  void UpdateData(ref string err)
+        public void UpdateData(ref string err)
         {
             using (SqlConnection connection = this.GetConnection())
             {
@@ -155,10 +157,10 @@ namespace DBase
                     {
                         err = $"Rollback Exception {ex2.ToString()}";
                     }
-                }                
+                }
             }
         }
-        public  void Delete(ref string err)
+        public void Delete(ref string err)
         {
             using (SqlConnection connection = this.GetConnection())
             {
@@ -188,7 +190,7 @@ namespace DBase
                 }
             }
         }
-        private  SqlCommand PrepareCommand(SqlConnection connection, string request)
+        private SqlCommand PrepareCommand(SqlConnection connection, string request)
         {
             SqlCommand command = connection.CreateCommand();
             SqlTransaction transaction;

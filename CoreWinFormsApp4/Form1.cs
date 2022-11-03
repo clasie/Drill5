@@ -1,4 +1,5 @@
-﻿using DBase;
+﻿using Autofac;
+using DBase;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,13 +14,23 @@ using System.Windows.Forms;
 
 namespace CoreWinFormsApp4
 {
+    /// <summary>
+    /// On va utiliser Form -> qui va utiliser Business -> qui va utiliser DataBase.
+    /// On va se servir des injections Autofac pour cela.
+    /// </summary>
     public partial class Form1 : Form
     {
         private string ConnectionString = string.Empty;
-        private DataBase dataBase;
+        private IBusinesLogic businesLogic;
         public Form1()
         {
-            InitializeComponent();            
+            InitializeComponent();
+
+            //Prep injection dependence
+            var container = ContainerConfig.Configure();
+            using (var scope = container.BeginLifetimeScope()) {
+                businesLogic = scope.Resolve<IBusinesLogic>();
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -30,7 +41,6 @@ namespace CoreWinFormsApp4
             {
                 Application.Exit();
             }
-            this.dataBase = new DataBase(ConfigurationManager.AppSettings["connectionString"]);
         }
         private void DisplayErrorMessageIfAny(string err) {
             if (err != "")
@@ -46,7 +56,7 @@ namespace CoreWinFormsApp4
             string err = string.Empty;
             try
             {
-                dataBase.TestConnection(ref err);
+                businesLogic.TestConnection(ref err);
                 DisplayErrorMessageIfAny(err);
             }
             catch (Exception ex) 
@@ -54,12 +64,13 @@ namespace CoreWinFormsApp4
                 MessageBox.Show(ex.ToString());
             }
         }
+  
         private void btn_getData_Click(object sender, EventArgs e)
         {
             string err = string.Empty;
             try
             {
-                var dataList = dataBase.GetDataList(ref err);
+                var dataList = businesLogic.GetDataList(ref err);
                 StringBuilder sb = new StringBuilder();
                 foreach (var item in dataList) {
                     sb.Append(item.ToString()).AppendLine();
@@ -77,7 +88,7 @@ namespace CoreWinFormsApp4
             string err = string.Empty;
             try
             {
-                dataBase.InsertData(ref err);
+                businesLogic.InsertData(ref err);
                 DisplayErrorMessageIfAny(err);
             }
             catch (Exception ex)
@@ -90,7 +101,7 @@ namespace CoreWinFormsApp4
             string err = string.Empty;
             try
             {
-                dataBase.UpdateData(ref err);
+                businesLogic.UpdateData(ref err);
                 DisplayErrorMessageIfAny(err);
             }
             catch (Exception ex)
@@ -103,7 +114,7 @@ namespace CoreWinFormsApp4
             string err = string.Empty;
             try
             {
-                dataBase.Delete(ref err);
+                businesLogic.Delete(ref err);
                 DisplayErrorMessageIfAny(err);
             }
             catch (Exception ex)

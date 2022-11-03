@@ -16,9 +16,10 @@ namespace CoreWinFormsApp4
     public partial class Form1 : Form
     {
         private string ConnectionString = string.Empty;
+        private DataBase dataBase;
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -29,8 +30,7 @@ namespace CoreWinFormsApp4
             {
                 Application.Exit();
             }
-            ConnectionString = ConfigurationManager.AppSettings["connectionString"];
-            DBase.DataBase.ConnectionString = ConnectionString;
+            this.dataBase = new DataBase(ConfigurationManager.AppSettings["connectionString"]);
         }
         private void DisplayErrorMessageIfAny(string err) {
             if (err != "")
@@ -46,7 +46,7 @@ namespace CoreWinFormsApp4
             string err = string.Empty;
             try
             {
-                DBase.DataBase.TestConnection(ref err);
+                dataBase.TestConnection(ref err);
                 DisplayErrorMessageIfAny(err);
             }
             catch (Exception ex) 
@@ -59,7 +59,7 @@ namespace CoreWinFormsApp4
             string err = string.Empty;
             try
             {
-                var dataList = DBase.DataBase.GetDataList(ref err);
+                var dataList = dataBase.GetDataList(ref err);
                 StringBuilder sb = new StringBuilder();
                 foreach (var item in dataList) {
                     sb.Append(item.ToString()).AppendLine();
@@ -77,7 +77,7 @@ namespace CoreWinFormsApp4
             string err = string.Empty;
             try
             {
-                DBase.DataBase.InsertData(ref err);
+                dataBase.InsertData(ref err);
                 DisplayErrorMessageIfAny(err);
             }
             catch (Exception ex)
@@ -90,7 +90,7 @@ namespace CoreWinFormsApp4
             string err = string.Empty;
             try
             {
-                DBase.DataBase.UpdateData(ref err);
+                dataBase.UpdateData(ref err);
                 DisplayErrorMessageIfAny(err);
             }
             catch (Exception ex)
@@ -103,7 +103,7 @@ namespace CoreWinFormsApp4
             string err = string.Empty;
             try
             {
-                DBase.DataBase.Delete(ref err);
+                dataBase.Delete(ref err);
                 DisplayErrorMessageIfAny(err);
             }
             catch (Exception ex)

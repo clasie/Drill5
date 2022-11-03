@@ -6,20 +6,24 @@ using System.Text;
 
 namespace DBase
 {
-    public static  class DataBase
+    public class DataBase
     {
-        private static string _connectionString = string.Empty;
-        public static string ConnectionString {
+        private string _connectionString = string.Empty;
+        public string ConnectionString {
             get => _connectionString;
             set => _connectionString = value;
         }
-        public static SqlConnection GetConnection()
+        public DataBase(string connectionString)
+        {
+            this.ConnectionString = connectionString;
+        }
+        public SqlConnection GetConnection()
         {
             return new SqlConnection(ConnectionString);
         }
-        public static void TestConnection(ref string err)
+        public void TestConnection(ref string err)
         {
-            SqlConnection cnn = DBase.DataBase.GetConnection();
+            SqlConnection cnn = this.GetConnection();
             try
             {
                 cnn.Open();
@@ -37,11 +41,11 @@ namespace DBase
                 }
             }
         }
-        public static List<AvionAF> GetDataList(ref string err)
+        public List<AvionAF> GetDataList(ref string err)
         {
             StringBuilder sb = new StringBuilder();
             List<AvionAF> avionAFs = new List<AvionAF>();
-            using (SqlConnection connection = DBase.DataBase.GetConnection())
+            using (SqlConnection connection = GetConnection())
             {
                 connection.Open();
 
@@ -79,7 +83,7 @@ namespace DBase
                 return avionAFs;
             }
         }
-        private static AvionAF GetAvnionAF(SqlDataReader sqlDataReader) {
+        private  AvionAF GetAvnionAF(SqlDataReader sqlDataReader) {
             var avionAF = new AvionAF();
 
             avionAF.Immat = sqlDataReader.GetValue(0).ToString();
@@ -91,9 +95,9 @@ namespace DBase
 
             return avionAF;
         }
-        public static void InsertData(ref string err)
+        public  void InsertData(ref string err)
         {
-            using (SqlConnection connection = DBase.DataBase.GetConnection())
+            using (SqlConnection connection = GetConnection())
             {
                 connection.Open();
 
@@ -123,9 +127,9 @@ namespace DBase
                 }
             }
         }
-        public static void UpdateData(ref string err)
+        public  void UpdateData(ref string err)
         {
-            using (SqlConnection connection = DBase.DataBase.GetConnection())
+            using (SqlConnection connection = this.GetConnection())
             {
                 connection.Open();
 
@@ -154,9 +158,9 @@ namespace DBase
                 }                
             }
         }
-        public static void Delete(ref string err)
+        public  void Delete(ref string err)
         {
-            using (SqlConnection connection = DBase.DataBase.GetConnection())
+            using (SqlConnection connection = this.GetConnection())
             {
                 connection.Open();
 
@@ -184,7 +188,7 @@ namespace DBase
                 }
             }
         }
-        private static SqlCommand PrepareCommand(SqlConnection connection, string request)
+        private  SqlCommand PrepareCommand(SqlConnection connection, string request)
         {
             SqlCommand command = connection.CreateCommand();
             SqlTransaction transaction;

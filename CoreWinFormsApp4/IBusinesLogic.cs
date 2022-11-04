@@ -14,7 +14,6 @@ namespace CoreWinFormsApp4
         void UpdateData(ref string err);
         void Delete(ref string err);
         Task<string> LoadDataHugeProcessAsync();
-        string GetConcatText();
         Task<string> GetHugeLoad();
     }
 }

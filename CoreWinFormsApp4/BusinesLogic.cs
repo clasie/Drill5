@@ -52,8 +52,5 @@ namespace CoreWinFormsApp4
             ConcatText = " -> Résultat ... ";
             return ConcatText;
         }
-        public string GetConcatText() {
-            return ConcatText;
-        }
     }
 }

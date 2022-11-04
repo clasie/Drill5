@@ -122,5 +122,60 @@ namespace CoreWinFormsApp4
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        private void btn_CallDirectSyncAndReturn_Click(object sender, EventArgs e)
+        {
+            tbx_log.Text = "btn_CallDirectSyncAndReturn_Click";
+            var result = businesLogic.GetHugeLoad();
+            tbx_log.Text += result.Result;
+        }
+
+        /// <summary>
+        /// Indirect
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void btn_CallDirectAsyncAndReturn_Click(object sender, EventArgs e)
+        {
+            tbx_log.Text = "btn_CallDirectAsyncAndReturn_Click";
+            var result = await Task.Run(() => businesLogic.GetHugeLoad());
+            tbx_log.Text += result;
+        }
+        /// <summary>
+        /// Indirect
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void btn_CallDirectAsyncAndNoReturn_Click(object sender, EventArgs e)
+        {
+            tbx_log.Text = "btn_CallDirectAsyncAndNoReturn_Click";
+            businesLogic.GetHugeLoad();
+        }
+        /// <summary>
+        /// Direct
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void btn_CallIndirectAsyncAndReturn_Click(object sender, EventArgs e)
+        {
+            tbx_log.Text = "btn_CallIndirectAsyncAndReturn_Click";
+            var result = await Task.Run(() => businesLogic.LoadDataHugeProcessAsync());
+            tbx_log.Text += result;
+        }
+        /// <summary>
+        /// Direct
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_CallIndirectAsyncAndNoReturn_Click(object sender, EventArgs e)
+        {
+            tbx_log.Text = "btn_CallIndirectAsyncAndNoReturn_Click";
+            businesLogic.LoadDataHugeProcessAsync();
+        }
+
+        private void btn_clear_Click(object sender, EventArgs e)
+        {
+            tbx_log.Clear();
+        }
     }
 }

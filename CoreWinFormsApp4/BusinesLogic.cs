@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CoreWinFormsApp4
 {
 
     public class BusinesLogic : IBusinesLogic
     {
+        public string ConcatText = "";
         public IDataBase dataBase;
         /// <summary>
         /// Ijection de dependence
@@ -39,6 +41,19 @@ namespace CoreWinFormsApp4
         }
         public void Delete(ref string err) {
             dataBase.Delete(ref err);
+        }
+        public async Task<string> LoadDataHugeProcessAsync()
+        {
+            var text = await Task.Run(() => GetHugeLoad());
+            return text;
+        }
+        public async Task<string> GetHugeLoad() {
+            System.Threading.Thread.Sleep(5000);
+            ConcatText = " -> Résultat ... ";
+            return ConcatText;
+        }
+        public string GetConcatText() {
+            return ConcatText;
         }
     }
 }

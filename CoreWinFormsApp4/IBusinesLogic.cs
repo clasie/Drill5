@@ -1,6 +1,7 @@
 ﻿using DBase;
 using DBase.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CoreWinFormsApp4
 {
@@ -12,5 +13,8 @@ namespace CoreWinFormsApp4
         void InsertData(ref string err);
         void UpdateData(ref string err);
         void Delete(ref string err);
+        Task<string> LoadDataHugeProcessAsync();
+        string GetConcatText();
+        Task<string> GetHugeLoad();
     }
 }

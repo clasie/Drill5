@@ -9,3 +9,4 @@ C:\Users\csi\source\repos\Drill5\DB\obj\Debug\net5.0\DBase.csproj.CoreCompileInp
 C:\Users\csi\source\repos\Drill5\DB\obj\Debug\net5.0\DBase.dll
 C:\Users\csi\source\repos\Drill5\DB\obj\Debug\net5.0\ref\DBase.dll
 C:\Users\csi\source\repos\Drill5\DB\obj\Debug\net5.0\DBase.pdb
+C:\Users\csi\source\repos\Drill5\DB\obj\Debug\net5.0\DBase.csproj.AssemblyReference.cache

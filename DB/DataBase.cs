@@ -46,27 +46,25 @@ namespace DBase
         {
             StringBuilder sb = new StringBuilder();
             List<AvionAF> avionAFs = new List<AvionAF>();
+
             using (SqlConnection connection = GetConnection())
             {
                 connection.Open();
 
-                SqlCommand command = connection.CreateCommand();
-                SqlTransaction transaction;
-                transaction = connection.BeginTransaction("SampleTransaction");
-                command.Connection = connection;
-                command.Transaction = transaction;
-
                 string req = "SELECT * FROM aviondeaf";
+
+                SqlCommand command = new SqlCommand(req, connection);
+                //Transaction
+                command.Transaction = connection.BeginTransaction("SampleTransaction"); ;
 
                 try
                 {
-                    command.CommandText = req;
                     SqlDataReader sqlDataReader = command.ExecuteReader();
                     while (sqlDataReader.Read())
                     {
                         avionAFs.Add(GetAvnionAF(sqlDataReader));
                     }
-                    transaction.Commit();
+                    command.Transaction.Commit();
                 }
                 catch (Exception ex)
                 {
@@ -74,7 +72,7 @@ namespace DBase
                     // Attempt to roll back the transaction. 
                     try
                     {
-                        transaction.Rollback();
+                        command.Transaction.Rollback();
                     }
                     catch (Exception ex2)
                     {
@@ -102,29 +100,34 @@ namespace DBase
             using (SqlConnection connection = GetConnection())
             {
                 connection.Open();
-
+                
                 string
-                   req = $"INSERT INTO aviondeaf (immat,typeAvion, nbHVol)";
-                req += $"VALUES('CSI-3','csi3-avion',15)";
+                   req2 = $"INSERT INTO aviondeaf (immat,typeAvion, nbHVol)" +
+                          $"VALUES(@immat,@typeAvion,@heuresDeVol)";
 
-                SqlCommand command = PrepareCommand(connection, req);
+                SqlCommand command = new SqlCommand(req2, connection);
+                //Transaction
+                command.Transaction = connection.BeginTransaction();
+                //Params
+                command.Parameters.AddWithValue("@immat", "CSI-3");
+                command.Parameters.AddWithValue("@typeAvion", "csi3-avion");
+                command.Parameters.AddWithValue("@heuresDeVol", 15);
 
                 try
                 {
-                    command.CommandText = req;
                     command.ExecuteNonQuery();
-                    command.Transaction.Commit();
+                    command.Transaction.Commit();//ok
                 }
                 catch (Exception ex)
                 {
                     err = $"Commit Exception {ex.ToString()}";
                     try
                     {
-                        command.Transaction.Rollback();
+                        command.Transaction.Rollback();//ko
                     }
                     catch (Exception ex2)
                     {
-                        err = $"Rollback Exception {ex2.ToString()}";
+                        err = $"Rollback Exception {ex2.ToString()}";//ko ko
                     }
                 }
             }
@@ -135,14 +138,19 @@ namespace DBase
             {
                 connection.Open();
 
-                var req = "UPDATE aviondeaf SET immat = 'CSI-Update1', typeAvion = 'typeAvion-Update' ";
-                req += " WHERE nbHVol = 15";
+                var req = " UPDATE aviondeaf SET immat = @immat, typeAvion = @typeAvion ";
+                   req += " WHERE nbHVol = @nombreHVol";
 
-                SqlCommand command = PrepareCommand(connection, req);
+                SqlCommand command = new SqlCommand(req,connection);
+                //Transaction
+                command.Transaction = connection.BeginTransaction();
+                //Param
+                command.Parameters.AddWithValue("@immat", "CSI-Update1");
+                command.Parameters.AddWithValue("@typeAvion", "typeAvion-Update");
+                command.Parameters.AddWithValue("@nombreHVol", "15");
 
                 try
                 {
-                    command.CommandText = req;
                     command.ExecuteNonQuery();
                     command.Transaction.Commit();
                 }
@@ -166,13 +174,16 @@ namespace DBase
             {
                 connection.Open();
 
-                var req = "DELETE FROM aviondeaf WHERE immat LIKE '%CSI%' ";
+                var req = "DELETE FROM aviondeaf WHERE immat LIKE @immat ";
 
-                SqlCommand command = PrepareCommand(connection, req);
+                SqlCommand command = new SqlCommand(req, connection);
+                //Transaction
+                command.Transaction = connection.BeginTransaction();
+                //Params
+                command.Parameters.AddWithValue("@immat", "%CSI%");
 
                 try
                 {
-                    command.CommandText = req;
                     command.ExecuteNonQuery();
                     command.Transaction.Commit();
                 }
@@ -189,16 +200,6 @@ namespace DBase
                     }
                 }
             }
-        }
-        private SqlCommand PrepareCommand(SqlConnection connection, string request)
-        {
-            SqlCommand command = connection.CreateCommand();
-            SqlTransaction transaction;
-            // Start a local transaction.
-            transaction = connection.BeginTransaction("SampleTransaction");
-            command.Connection = connection;
-            command.Transaction = transaction;
-            return command;
         }
     }
 }

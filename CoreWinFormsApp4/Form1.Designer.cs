@@ -44,6 +44,8 @@ namespace CoreWinFormsApp4
             this.label3 = new System.Windows.Forms.Label();
             this.btn_CallDirectSyncAndReturn = new System.Windows.Forms.Button();
             this.btn_clear = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btn_features = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_testConnection
@@ -192,11 +194,32 @@ namespace CoreWinFormsApp4
             this.btn_clear.UseVisualStyleBackColor = true;
             this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(133, 760);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(64, 20);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "Features";
+            // 
+            // btn_features
+            // 
+            this.btn_features.Location = new System.Drawing.Point(208, 786);
+            this.btn_features.Name = "btn_features";
+            this.btn_features.Size = new System.Drawing.Size(403, 29);
+            this.btn_features.TabIndex = 19;
+            this.btn_features.Text = "Test 10 Features";
+            this.btn_features.UseVisualStyleBackColor = true;
+            this.btn_features.Click += new System.EventHandler(this.btn_features_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(810, 817);
+            this.ClientSize = new System.Drawing.Size(810, 898);
+            this.Controls.Add(this.btn_features);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btn_clear);
             this.Controls.Add(this.btn_CallDirectSyncAndReturn);
             this.Controls.Add(this.label3);
@@ -237,6 +260,8 @@ namespace CoreWinFormsApp4
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btn_CallDirectSyncAndReturn;
         private System.Windows.Forms.Button btn_clear;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btn_features;
     }
 }
 

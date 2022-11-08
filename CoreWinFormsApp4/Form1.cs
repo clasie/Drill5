@@ -177,5 +177,16 @@ namespace CoreWinFormsApp4
         {
             tbx_log.Clear();
         }
+
+        private void btn_features_Click(object sender, EventArgs e)
+        {
+            var feature = new Features();
+            ///
+            /// Feature 8
+            /// 
+            feature.TryParse();
+            feature.DoStuffOther(null);
+            feature.DoStuffOther("");
+        }
     }
 }

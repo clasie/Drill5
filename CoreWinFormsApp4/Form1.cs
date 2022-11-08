@@ -187,6 +187,8 @@ namespace CoreWinFormsApp4
             feature.TryParse();
             feature.DoStuffOther(null);
             feature.DoStuffOther("");
+            feature.TestNullObject();
+            feature.TestNullAndAssign();
         }
     }
 }

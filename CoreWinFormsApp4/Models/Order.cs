@@ -8,6 +8,13 @@ namespace CoreWinFormsApp4.Models
 {
     public class Order
     {
+        int Debug;
         public Recipient recipient;
+        public Order(int debug)
+        {
+            Debug = debug;
+        }
+        public Order() { 
+        }
     }
 }

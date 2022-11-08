@@ -54,8 +54,21 @@ namespace CoreWinFormsApp4
         //-> ?? means if it is null do the right stuff
         public void DoStuffOther(string name) 
         {
-            _ = name ?? throw new ArgumentException();
-            _ = name.Length > 0 ? name : throw new ArgumentException(); 
+            try
+            {
+                _ = name ?? throw new ArgumentException();
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
+            }
+            try
+            {
+                name = "";
+                _ = name.Length > 0 ? name : throw new ArgumentException();
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
+            }
         }
         public void TestNullObject() {
             Order order = new Order();
@@ -68,6 +81,15 @@ namespace CoreWinFormsApp4
             else {
                 Console.WriteLine("Null");
             }
+        }
+        public void TestNullAndAssign() {
+            Order order1 = null;
+            if (order1 == null) {
+                order1 = new Order(1);
+            }
+            Order order2 = null;
+            order2 ??= new Order(2);
+
         }
     }
 }

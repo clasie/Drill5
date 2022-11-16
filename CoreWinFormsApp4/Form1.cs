@@ -180,15 +180,33 @@ namespace CoreWinFormsApp4
 
         private void btn_features_Click(object sender, EventArgs e)
         {
-            var feature = new Features();
             ///
-            /// Feature 8
+            /// Features
             /// 
+            var feature = new Features();
             feature.TryParse();
             feature.DoStuffOther(null);
             feature.DoStuffOther("");
             feature.TestNullObject();
             feature.TestNullAndAssign();
+            feature.PrintLengthTest();
+            feature.AcceptNullAndTest(null);
+            feature.AssurerNotNull();
+            feature.TestTuple1();
+            feature.TestTuple2();
+            feature.EqualityTuples();
+            feature.EqualityTuples2();
+            feature.TestSwitch1();
+            feature.TestSwitchLine();
+            feature.TestFileName();
+            feature.TestIsNotNull(null);
+            ///
+            /// Linq tests
+            /// 
+            var linqTests = new LinqTests();
+            linqTests.QueryLength();
+            linqTests.OnArayOfString();
+            linqTests.QuertToListObjetcs();
         }
     }
 }

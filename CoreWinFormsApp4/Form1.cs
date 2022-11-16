@@ -207,6 +207,17 @@ namespace CoreWinFormsApp4
             linqTests.QueryLength();
             linqTests.OnArayOfString();
             linqTests.QuertToListObjetcs();
+            linqTests.JoinQueryComplex();
+            linqTests.ReturnAnonymousTypes();
+            linqTests.AllOperateur();
+            linqTests.ContainsWithCustomClass();
+            linqTests.Aggregate();
+            linqTests.AverageBasic();
+            linqTests.AverageCustomClass();
+            linqTests.Max();
+            linqTests.MaxComplex();
+            
+
         }
     }
 }

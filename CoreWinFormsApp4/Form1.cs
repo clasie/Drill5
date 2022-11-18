@@ -216,7 +216,26 @@ namespace CoreWinFormsApp4
             linqTests.AverageCustomClass();
             linqTests.Max();
             linqTests.MaxComplex();
-            
+            linqTests.MaxOnPrimiveEVE();
+            linqTests.SumOnPrimitiveValuesEVE();
+            linqTests.SumStudentAgeAndAdults();
+            linqTests.ElementAt();
+            linqTests.First();
+            linqTests.FirstOrDefault();
+            linqTests.FirstOrDefaultWithNullIAnConditions();
+            linqTests.Last();
+            linqTests.LastOrDefault();
+            linqTests.Single();
+            linqTests.SequenceEqual();
+            linqTests.SequenceEqualOnObjects();
+            linqTests.Concat();
+            linqTests.DefaultEmpty();
+            linqTests.DefaultEmptyComplex();
+            linqTests.Empty();
+
+
+
+
 
         }
     }
